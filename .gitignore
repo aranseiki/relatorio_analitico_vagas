@@ -1,5 +1,5 @@
 venv/
 .git/
 .vscode/
+__pycache__/
 geckodriver.log
-
