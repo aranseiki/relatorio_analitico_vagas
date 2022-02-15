@@ -10,29 +10,35 @@ def iniciar_navegador(url):
     global navegador
     navegador = Firefox()
     navegador.get(url)
-    return navegador
 
-def aceitar_cookies(resposta):
-    if resposta.upper() == 'SIM':
-        try:
-            wait = WebDriverWait(navegador, 30)
-            wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.cookieconsent')))
-            notificacao_cookies = navegador.find_element(By.CSS_SELECTOR, 'div.cookieconsent')
-            botao_aceitar = notificacao_cookies.find_element(By.CSS_SELECTOR, 'button#aceitar')
-            botao_aceitar.click()
-        except:
-            ...
+def aceitar_cookies():
+    try:
+        wait = WebDriverWait(navegador, 30)
+        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.cookieconsent')))
+        notificacao_cookies = navegador.find_element(By.CSS_SELECTOR, 'div.cookieconsent')
+        botao_aceitar = notificacao_cookies.find_element(By.CSS_SELECTOR, 'button#aceitar')
+        botao_aceitar.click()
+    except:
+        ...
+
+def encontrar_elemento(seletor):
+    navegador.find_element(By.CSS_SELECTOR, seletor)
+
+def contar_elementos(seletor):
+    elementos = navegador.find_elements(By.CSS_SELECTOR, seletor)
+    return elementos.__len__()
 
 def extrair_texto(seletor):
-    elementos = navegador.find_elements(By.CSS_SELECTOR, seletor)
-    lista_texto = []
-    for item in elementos:
-        try: 
-            item.click()
-        except:
-            ...    
-        lista_texto.append( item.text.split('\n') )
-    return lista_texto
+    elemento = navegador.find_element(By.CSS_SELECTOR, seletor)
+    texto_elemento = elemento.text
+    return texto_elemento
+    
+def clicar_elemento(seletor):
+    try: 
+        elemento = navegador.find_element(By.CSS_SELECTOR, seletor)
+        elemento.click()
+    except:
+        ...    
 
 def salvar_csv(arquivo, modo, conteudo):
     with open(arquivo, modo) as arquivo_manipulado:
