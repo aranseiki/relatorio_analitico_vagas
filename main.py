@@ -1,7 +1,8 @@
 from relatorio_analitico_vagas import (iniciar_navegador, aceitar_cookies,
                             contar_elementos, encontrar_elemento, clicar_elemento, 
-                            extrair_texto, aguardar_elemento, voltar_pagina, salvar_csv,
-                            enviar_email_outlook, encerrar_navegador)
+                            clique_mouse, extrair_texto, aguardar_elemento, 
+                            voltar_pagina, salvar_csv, enviar_email_outlook, 
+                            encerrar_navegador)
 from time import sleep
 import datetime as dt
 import csv
@@ -28,9 +29,9 @@ try:
         clicar_elemento(seletor)
         texto_vaga = extrair_texto(seletor)
         lista_vagas.append(texto_vaga)
-        clicar_elemento(seletor_botao_detalhes_vaga) 
+        clique_mouse(encontrar_elemento(seletor_botao_detalhes_vaga))
+        clicar_elemento(seletor_botao_detalhes_vaga)
         sleep(2)
-        aguardar_elemento(seletor_titulo_vaga)
         lista_descricao_vagas.append(extrair_texto(seletor_descricao_vaga))
         voltar_pagina()
         sleep(7)
