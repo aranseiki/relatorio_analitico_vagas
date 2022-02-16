@@ -10,12 +10,21 @@ def iniciar_navegador(url):
     global navegador
     navegador = Firefox()
     navegador.get(url)
+    
 
+def voltar_pagina():
+    global navegador
+    navegador.back()
+
+def aguardar_elemento(seletor, tempo = 30):
+    wait = WebDriverWait(navegador, tempo)
+    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, seletor)))
+    
 def aceitar_cookies():
     try:
-        wait = WebDriverWait(navegador, 30)
-        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.cookieconsent')))
-        notificacao_cookies = navegador.find_element(By.CSS_SELECTOR, 'div.cookieconsent')
+        seletor = 'div.cookieconsent'
+        aguardar_elemento(seletor)
+        notificacao_cookies = navegador.find_element(By.CSS_SELECTOR, seletor)
         botao_aceitar = notificacao_cookies.find_element(By.CSS_SELECTOR, 'button#aceitar')
         botao_aceitar.click()
     except:
@@ -32,7 +41,7 @@ def extrair_texto(seletor):
     elemento = navegador.find_element(By.CSS_SELECTOR, seletor)
     texto_elemento = elemento.text
     return texto_elemento
-    
+
 def clicar_elemento(seletor):
     try: 
         elemento = navegador.find_element(By.CSS_SELECTOR, seletor)
