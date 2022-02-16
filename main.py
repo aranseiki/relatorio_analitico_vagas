@@ -1,7 +1,9 @@
 from relatorio_analitico_vagas import (iniciar_navegador, aceitar_cookies,
                             contar_elementos, encontrar_elemento, clicar_elemento, 
-                            extrair_texto, aguardar_elemento, voltar_pagina, salvar_csv, encerrar_navegador)
+                            extrair_texto, aguardar_elemento, voltar_pagina, salvar_csv,
+                            enviar_email_outlook, encerrar_navegador)
 from time import sleep
+import datetime as dt
 
 url = 'https://cadmus.com.br/vagas-tecnologia/'
 
@@ -46,5 +48,23 @@ for linha in lista_vagas:
         descricao = str(lista_descricao_vagas[indice])
         salvar_csv('relatorio_analitico_vagas.csv', 'a', [nome,local,descricao])
         indice =+1
+
+endereco_de = "techall@hotmail.com.br"
+senha = 'Ainouta@773912'
+endereco_para = "techall@hotmail.com.br"
+assunto = 'Assunto teste'
+data_atual = dt.datetime.now().strftime('%d/%m/%Y')
+
+corpo = '''Bom dia, 
+        
+        Segue o relatorio de vagas do dia {}.
+        '''.format(data_atual)
+#arquivo = 'relatorio_analitico_vagas.csv'
+
+mensagem = '''Subject: {}
+
+    {}'''.format(assunto, corpo)
+
+enviar_email_outlook(endereco_de, senha, endereco_para, mensagem)
 
 encerrar_navegador()
