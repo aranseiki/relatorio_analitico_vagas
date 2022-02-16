@@ -4,6 +4,7 @@ from relatorio_analitico_vagas import (iniciar_navegador, aceitar_cookies,
                             enviar_email_outlook, encerrar_navegador)
 from time import sleep
 import datetime as dt
+import csv
 
 url = 'https://cadmus.com.br/vagas-tecnologia/'
 
@@ -49,21 +50,28 @@ for linha in lista_vagas:
         salvar_csv('relatorio_analitico_vagas.csv', 'a', [nome,local,descricao])
         indice =+1
 
-endereco_de = "techall@hotmail.com.br"
-senha = 'Ainouta@773912'
+endereco_de = 'Allan de Oliveira Almeida <techall@hotmail.com.br>'
+senha = input('digite a senha: \r\n')
 endereco_para = "techall@hotmail.com.br"
-assunto = 'Assunto teste'
 data_atual = dt.datetime.now().strftime('%d/%m/%Y')
+assunto = 'Relatorio de vagas Cadmus - dia ' + data_atual
+anexo = 'relatorio_analitico_vagas.csv'
+conteudo_anexo = []
+with open(anexo) as arquivo:
+    arquivo_anexo = csv.reader(arquivo)
+    for linha in arquivo_anexo:
+        if linha != []:
+            conteudo_anexo.append(linha)
 
-corpo = '''Bom dia, 
-        
-        Segue o relatorio de vagas do dia {}.
-        '''.format(data_atual)
-#arquivo = 'relatorio_analitico_vagas.csv'
+mensagem = """From: {}
+To: {}
+Subject: {}
+Content-Type: multipart/mixed; 
+Content-Disposition: attachment; filename="{}"
 
-mensagem = '''Subject: {}
+{}
 
-    {}'''.format(assunto, corpo)
+""" .format(endereco_de, endereco_para, assunto, anexo, conteudo_anexo)
 
 enviar_email_outlook(endereco_de, senha, endereco_para, mensagem)
 

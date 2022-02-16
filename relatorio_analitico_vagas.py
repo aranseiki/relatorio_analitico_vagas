@@ -1,4 +1,5 @@
 import csv
+from dataclasses import replace
 import smtplib
 import ssl
 from selenium.webdriver import Firefox
@@ -56,15 +57,14 @@ def salvar_csv(arquivo, modo, conteudo):
         escreva = csv.writer(arquivo_manipulado)
         escreva.writerow(conteudo)
 
-
-
 def enviar_email_outlook(endereco_de, senha, endereco_para, mensagem):
+    login = endereco_de.split('<')[1].replace('>','')
     server = smtplib.SMTP('smtp.office365.com')
     server.connect("smtp.office365.com", 587)
     server.ehlo('hello')
     contexto = ssl.create_default_context()
     server.starttls(context=contexto)
-    server.login(endereco_de, senha)
+    server.login(str(login), senha)
     server.sendmail(endereco_de, endereco_para, mensagem)
     server.quit()
 
