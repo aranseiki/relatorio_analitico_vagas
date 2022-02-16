@@ -74,9 +74,11 @@ def clique_mouse(webelemento):
     action.double_click(webelemento).perform()
 
 def salvar_csv(arquivo, modo, conteudo):
-    with open(arquivo, modo) as arquivo_manipulado:
+    with open(arquivo, modo, encoding='utf8') as arquivo_manipulado:
         escreva = csv.writer(arquivo_manipulado)
         escreva.writerow(conteudo)
+
+#encoding='cp1252'
 
 def enviar_email_outlook(endereco_de, senha, endereco_para, mensagem):
     login = endereco_de.split('<')[1].replace('>','')
