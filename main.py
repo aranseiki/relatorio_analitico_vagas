@@ -3,7 +3,6 @@ from time import sleep
 import datetime as dt
 import csv
 
-
 url = 'https://cadmus.com.br/vagas-tecnologia/'
 
 passo.iniciar_navegador(url)
@@ -13,16 +12,21 @@ passo.aceitar_cookies()
 lista_vagas = []
 lista_descricao_vagas = []
 
-total_vagas = passo.contar_elementos('section#solucoes-texto > div > div:nth-child(2) > div > div#pfolio > div')
+total_vagas = passo.contar_elementos(
+    'section#solucoes-texto > div > div:nth-child(2) > div > div#pfolio > div'
+)
 
 vaga_atual = 1
 while vaga_atual <= total_vagas:
-    seletor = 'section#solucoes-texto > div > div:nth-child(2) > div > div#pfolio > div:nth-child(' + str(vaga_atual) + ')'
-    seletor_botao_detalhes_vaga = 'section#solucoes-texto > div > div:nth-child(2) > div > div#pfolio > div:nth-child(' + str(vaga_atual) + ') > div > p.link-vagas.m-0'
+    seletor = 'section#solucoes-texto > div > div:nth-child(2) > div > \
+    div#pfolio > div:nth-child(' + str(vaga_atual) + ')'
+    seletor_botao_detalhes_vaga = 'section#solucoes-texto > div > div:nth-child(2) > div > div#pfolio > \
+    div:nth-child(' + str(vaga_atual) + ') > div > p.link-vagas.m-0'
     seletor_descricao_vaga = 'div#boxVaga > p'
     seletor_titulo_vaga = 'div#boxVaga > h2'
     passo.encontrar_elemento(seletor)
     passo.clicar_elemento(seletor)
+    sleep(1)
     texto_vaga = passo.extrair_texto(seletor)
     lista_vagas.append(texto_vaga)
     passo.clique_mouse(passo.encontrar_elemento(seletor_botao_detalhes_vaga))
@@ -34,15 +38,21 @@ while vaga_atual <= total_vagas:
     passo.encontrar_elemento(seletor)
     vaga_atual = vaga_atual+1
 
-passo.salvar_csv('relatorio_analitico_vagas.csv', 'w', ['nome','local','descricao'])
+passo.salvar_csv(
+    'relatorio_analitico_vagas.csv', 'w', [
+        'Nome da vaga', 'Local da vaga', 'descrição da vaga'
+    ]
+)
 indice = 0
 for linha in lista_vagas:
     if linha != '':
-        linha = linha.split('\n') 
+        linha = linha.split('\n')
         nome = str(linha[0])
         local = str(linha[1])
         descricao = str(lista_descricao_vagas[indice])
-        passo.salvar_csv('relatorio_analitico_vagas.csv', 'a', (nome,local,descricao))
+        passo.salvar_csv(
+            'relatorio_analitico_vagas.csv', 'a', (nome, local, descricao)
+        )
         indice = indice + 1
 
 endereco_de = 'Allan de Oliveira Almeida <techall@hotmail.com.br>'
@@ -58,16 +68,21 @@ with open(anexo, encoding='utf8') as arquivo:
         if linha != []:
             conteudo_anexo.append(linha)
 
+conteudo_anexo = passo.tratar_anexo(conteudo_anexo)
+
 mensagem = """From: {}
 To: {}
 Subject: {}
-Content-Type: multipart/mixed; 
+Content-Type: multipart/mixed;
 Content-Disposition: attachment; filename="{}"
 
 {}
 
 """ .format(endereco_de, endereco_para, assunto, anexo, conteudo_anexo)
 
-passo.enviar_email_outlook(endereco_de, senha, endereco_para, mensagem.encode('utf8', 'replace'))
+passo.enviar_email_outlook(
+    endereco_de, senha, endereco_para,
+    mensagem.encode('utf8', 'replace')
+)
 
 passo.encerrar_navegador()
