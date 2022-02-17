@@ -1,0 +1,35 @@
+Iniciar o navegador
+Acessar o site 'https://cadmus.com.br/vagas-tecnologia/'
+Aceitar os cookies
+
+Enquanto vaga_atual for menor ou igual à total_vagas:
+    encontra o bloco de vagas atual
+    clica no bloco de vagas atual
+    aguarda 1 segundo
+    extrair_texto da vaga
+    adiciona o texto à lista de vagas
+    clicar_elemento botao_detalhes_vaga do elemento atual (redireciona à outra página)
+    aguarda 2 segundo
+    adiciona o texto da descrição na lista de descricao_vaga
+    voltar_pagina()
+    aguarda 7 segundo
+    garante que o elemento está visível para seguir adiante
+    segue paro próximo bloco de vagas
+
+salvar o conteúdo extraído em um arquivo csv:
+    o nome do arquivo csv é relatorio_analitico_vagas.csv
+    o arquivo contém o nome, local e a descrição de cada vaga, concatenando as duas listas criadas
+abre o arquivo csv
+guarda o conteúdo do arquivo csv
+trata o arquivo garantindo a consistência das informações para o correto envio do e-mail
+
+envia o e-mail contendo:
+    endereco de: o remetente do e-mail. Precisa estar no padrão 'Nome Completo <email@dominio.com.br>'
+    endereco para: o destinatário do e-mail. Precisa estar no padrão 'email@dominio.com.br'
+    assunto: O assunto do e-mail. O padrão é o Texto do assunto seguido da data do envio
+    anexo: O nome do anexo, que é o mesmo nome do arquivo csv
+    conteudo_anexo: O conteúdo extraído do arquivo csv
+    O e-mail será enviado pelo serviço do Outlook, portanto o remetente precisa ser de algum domínio Microsoft.
+    Ao enviar o e-mail, uma solicitação de senha aparecerá, e a automação só prosseguirá com o envio após o preenchimento da senha.
+
+encerrar o navegador

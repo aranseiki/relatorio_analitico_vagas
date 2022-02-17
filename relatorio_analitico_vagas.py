@@ -1,3 +1,4 @@
+import os
 import csv
 import smtplib
 import ssl
@@ -13,8 +14,12 @@ navegador = ''
 
 
 def cls():
-    import os
     os.system('cls')
+
+
+def criar_diretorio(caminho):
+    if not os.path.exists(caminho):
+        os.mkdir(caminho)
 
 
 def iniciar_navegador(url):
