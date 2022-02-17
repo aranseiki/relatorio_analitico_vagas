@@ -79,7 +79,7 @@ try:
 
     try:
         passo.salvar_csv(
-            caminho_dia_atual + '\\' + nome_arquivo_csv, 'w', [
+            caminho_extracao + '\\' + nome_arquivo_csv, 'w', [
                 'Nome da vaga', 'Local da vaga', 'descrição da vaga'
             ]
         )
@@ -125,7 +125,7 @@ try:
 
         {}
 
-        """ .format(endereco_de, endereco_para, assunto, anexo, conteudo_anexo)
+        """ .format(endereco_de, endereco_para, assunto, nome_arquivo_csv, conteudo_anexo)
 
         passo.enviar_email_outlook(
             endereco_de, senha, endereco_para,

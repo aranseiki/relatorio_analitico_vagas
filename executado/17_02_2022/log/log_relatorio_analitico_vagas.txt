@@ -1,1 +1,3 @@
 'OK', 'Processo concluído com sucesso', '17/02/2022: 16/26/40'
+'NOK', 'Erro no processo 2: Extração de dados do site', '17/02/2022: 16/47/22'
+'OK', 'Processo concluído com sucesso', '17/02/2022: 16/50/29'
