@@ -106,7 +106,8 @@ try:
         endereco_de = 'Allan de Oliveira Almeida <techall@hotmail.com.br>'
         senha = input('digite a senha: \r\n')
         endereco_para = "techall@hotmail.com.br"
-        assunto = 'Relatorio de vagas Cadmus - dia ' + data_atual
+        assunto = 'Relatorio de vagas Cadmus - dia ' + \
+            data_atual.replace('_', '/')
         anexo = caminho_extracao + '\\' + nome_arquivo_csv
         conteudo_anexo = []
         with open(anexo, encoding='utf8') as arquivo:
@@ -125,11 +126,17 @@ try:
 
         {}
 
-        """ .format(endereco_de, endereco_para, assunto, nome_arquivo_csv, conteudo_anexo)
+        """ .format(
+                endereco_de,
+                endereco_para,
+                assunto,
+                nome_arquivo_csv,
+                conteudo_anexo
+            )
 
         passo.enviar_email_outlook(
             endereco_de, senha, endereco_para,
-            mensagem.encode('utf8', 'replace')
+            mensagem.replace('        ', '').encode('utf8', 'replace')
         )
     except:
         mensagem_erro = TypeError(

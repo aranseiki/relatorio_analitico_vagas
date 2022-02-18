@@ -138,6 +138,7 @@ def enviar_email_outlook(endereco_de, senha, endereco_para, mensagem):
     contexto = ssl.create_default_context()
     servidor.starttls(context=contexto)
     servidor.login(str(login), senha)
+    cls()
     servidor.sendmail(endereco_de, endereco_para, mensagem)
     servidor.quit()
 
