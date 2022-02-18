@@ -7,7 +7,7 @@ from time import sleep
 try:
     mensagem_erro = ''
     data_atual = dt.datetime.now().strftime('%d/%m/%Y')
-    hora_atual_atual = dt.datetime.now().strftime('%H/%M/%S')
+    hora_atual_atual = dt.datetime.now().strftime('%H:%M:%S')
     pasta_dia_atual = data_atual.replace('/', '_')
     pasta_extracao = 'relatorio'
     pasta_log = 'log'
